@@ -41,8 +41,8 @@ export class PopoutService implements OnDestroy {
   createCDKPortal(data, windowInstance) {
     if (windowInstance) {
       windowInstance.document.body.innerText = '';
-      // create a PortalHost with the body of the new window document
-      const host = new DomPortalOutlet(windowInstance.document.body, this.componentFactoryResolver, this.applicationRef, this.injector);
+      // create a PortalOutlet with the body of the new window document
+      const outlet = new DomPortalOutlet(windowInstance.document.body, this.componentFactoryResolver, this.applicationRef, this.injector);
       // Copy styles from parent window
       document.querySelectorAll('link, style').forEach(htmlElement => {
         windowInstance.document.head.appendChild(htmlElement.cloneNode(true));
@@ -54,14 +54,14 @@ export class PopoutService implements OnDestroy {
       let componentInstance;
       if (data.modalName === PopoutModalName.customerDetail) {
         windowInstance.document.title = 'Customer Modal';
-        componentInstance = this.attachCustomerContainer(host, injector);
+        componentInstance = this.attachCustomerContainer(outlet, injector);
       }
       if (data.modalName === PopoutModalName.employerDetail) {
         windowInstance.document.title = 'Employer Modal';
-        componentInstance = this.attachEmployerContainer(host, injector);
+        componentInstance = this.attachEmployerContainer(outlet, injector);
       }
 
-      POPOUT_MODALS[data.modalName] = { windowInstance, host, componentInstance };
+      POPOUT_MODALS[data.modalName] = { windowInstance, outlet, componentInstance };
     }
   }
 
@@ -82,15 +82,15 @@ export class PopoutService implements OnDestroy {
     });
   }
 
-  attachCustomerContainer(host, injector) {
+  attachCustomerContainer(outlet, injector) {
     const containerPortal = new ComponentPortal(CustomerComponent, null, injector);
-    const containerRef: ComponentRef<CustomerComponent> = host.attach(containerPortal);
+    const containerRef: ComponentRef<CustomerComponent> = outlet.attach(containerPortal);
     return containerRef.instance;
   }
 
-  attachEmployerContainer(host, injector) {
+  attachEmployerContainer(outlet, injector) {
     const containerPortal = new ComponentPortal(EmployerComponent, null, injector);
-    const containerRef: ComponentRef<EmployerComponent> = host.attach(containerPortal);
+    const containerRef: ComponentRef<EmployerComponent> = outlet.attach(containerPortal);
     return containerRef.instance;
   }
 

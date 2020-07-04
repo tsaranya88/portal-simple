@@ -65,9 +65,9 @@ export class AppComponent {
       if (sameCustomer) {
         this.popoutService.focusPopoutWindow(PopoutModalName.customerDetail);
       } else {
-        customerPopoutDetails['host'].detach();
+        customerPopoutDetails['outlet'].detach();
         const injector = this.popoutService.createInjector(modalData);
-        const componentInstance = this.popoutService.attachCustomerContainer(customerPopoutDetails['host'], injector);
+        const componentInstance = this.popoutService.attachCustomerContainer(customerPopoutDetails['outlet'], injector);
         customerPopoutDetails['componentInstance'] = componentInstance;
         this.popoutService.focusPopoutWindow(PopoutModalName.customerDetail);
       }
@@ -94,9 +94,9 @@ export class AppComponent {
       if (sameCustomer) {
         this.popoutService.focusPopoutWindow(PopoutModalName.employerDetail);
       } else {
-        employerPopoutDetails['host'].detach();
+        employerPopoutDetails['outlet'].detach();
         const injector = this.popoutService.createInjector(modalData);
-        const componentInstance = this.popoutService.attachEmployerContainer(employerPopoutDetails['host'], injector);
+        const componentInstance = this.popoutService.attachEmployerContainer(employerPopoutDetails['outlet'], injector);
         employerPopoutDetails['componentInstance'] = componentInstance;
         this.popoutService.focusPopoutWindow(PopoutModalName.employerDetail);
       }
