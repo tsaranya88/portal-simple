@@ -47,6 +47,10 @@ export class PopoutService implements OnDestroy {
       document.querySelectorAll('link, style').forEach(htmlElement => {
         windowInstance.document.head.appendChild(htmlElement.cloneNode(true));
       });
+
+       // Clear popout modal content
+      windowInstance.document.body.innerText = '';
+
       // Create an injector with modal data
       const injector = this.createInjector(data);
 
@@ -82,6 +86,12 @@ export class PopoutService implements OnDestroy {
     });
   }
 
+  createInjector(data): PortalInjector {
+    const injectionTokens = new WeakMap();
+    injectionTokens.set(POPOUT_MODAL_DATA, data);
+    return new PortalInjector(this.injector, injectionTokens);
+  }
+
   attachCustomerContainer(outlet, injector) {
     const containerPortal = new ComponentPortal(CustomerComponent, null, injector);
     const containerRef: ComponentRef<CustomerComponent> = outlet.attach(containerPortal);
@@ -92,11 +102,5 @@ export class PopoutService implements OnDestroy {
     const containerPortal = new ComponentPortal(EmployerComponent, null, injector);
     const containerRef: ComponentRef<EmployerComponent> = outlet.attach(containerPortal);
     return containerRef.instance;
-  }
-
-  createInjector(data): PortalInjector {
-    const injectionTokens = new WeakMap();
-    injectionTokens.set(POPOUT_MODAL_DATA, data);
-    return new PortalInjector(this.injector, injectionTokens);
   }
 }
