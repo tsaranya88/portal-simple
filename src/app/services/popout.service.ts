@@ -1,8 +1,8 @@
 import { ComponentPortal, DomPortalOutlet, PortalInjector } from '@angular/cdk/portal';
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, OnDestroy } from '@angular/core';
 import {POPOUT_MODAL_DATA, POPOUT_MODALS, PopoutData, PopoutModalName} from './popout.tokens';
-import {CustomerComponent} from './customer/customer.component';
-import {EmployerComponent} from './employer/employer.component';
+import {CustomerComponent} from '../customer/customer.component';
+import {EmployerComponent} from '../employer/employer.component';
 
 @Injectable()
 export class PopoutService implements OnDestroy {
