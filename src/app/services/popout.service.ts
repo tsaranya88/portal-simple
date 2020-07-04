@@ -42,7 +42,6 @@ export class PopoutService implements OnDestroy {
 
   createCDKPortal(data, windowInstance) {
     if (windowInstance) {
-      windowInstance.document.body.innerText = '';
       // create a PortalOutlet with the body of the new window document
       const outlet = new DomPortalOutlet(windowInstance.document.body, this.componentFactoryResolver, this.applicationRef, this.injector);
       // Copy styles from parent window
