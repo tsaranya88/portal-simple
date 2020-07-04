@@ -1,0 +1,21 @@
+<h4>Employer Details</h4>
+<hr/>
+<div *ngIf="data">
+  <strong>Showing details for {{data.name}}</strong>
+  <div class="row">
+    <div class="col s2">Name</div>
+    <div class="col s10">{{data.name}}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Founded</div>
+    <div class="col s10">{{data.founded}}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Employee Count</div>
+    <div class="col s10">{{data.employeeCount}}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Description</div>
+    <div class="col s10">{{data.description}}</div>
+  </div>
+</div>

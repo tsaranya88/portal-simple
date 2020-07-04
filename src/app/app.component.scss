@@ -1,0 +1,11 @@
+button {
+  background: none!important;
+  border: none;
+  color: orange;
+  cursor: pointer;
+  padding-right: 24px;
+  text-transform: uppercase;
+  &:hover{
+    text-decoration: underline;
+  }
+}

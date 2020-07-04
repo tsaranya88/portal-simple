@@ -1,0 +1,17 @@
+<h4>Customer Details</h4>
+<hr/>
+<div *ngIf="data">
+  <strong>Showing details for {{data.name}}</strong>
+  <div class="row">
+    <div class="col s2">Name</div>
+    <div class="col s10">{{data.name}}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Age</div>
+    <div class="col s10">{{data.age}}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Employer</div>
+    <div class="col s10">{{data.employer}}</div>
+  </div>
+</div>
