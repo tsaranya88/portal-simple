@@ -6,6 +6,8 @@ import {EmployerComponent} from '../employer/employer.component';
 
 @Injectable()
 export class PopoutService implements OnDestroy {
+  styleSheetElement;
+
   constructor(
     private injector: Injector,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -44,28 +46,33 @@ export class PopoutService implements OnDestroy {
       // create a PortalOutlet with the body of the new window document
       const outlet = new DomPortalOutlet(windowInstance.document.body, this.componentFactoryResolver, this.applicationRef, this.injector);
       // Copy styles from parent window
-      document.querySelectorAll('link, style').forEach(htmlElement => {
+      document.querySelectorAll('style').forEach(htmlElement => {
         windowInstance.document.head.appendChild(htmlElement.cloneNode(true));
       });
+      // Copy stylesheet link from parent window
+      this.styleSheetElement = this.getStyleSheetElement();
+      windowInstance.document.head.appendChild(this.styleSheetElement);
 
-       // Clear popout modal content
-      windowInstance.document.body.innerText = '';
+      this.styleSheetElement.onload = () => {
+        // Clear popout modal content
+        windowInstance.document.body.innerText = '';
 
-      // Create an injector with modal data
-      const injector = this.createInjector(data);
+        // Create an injector with modal data
+        const injector = this.createInjector(data);
 
-      // Attach the portal
-      let componentInstance;
-      if (data.modalName === PopoutModalName.customerDetail) {
-        windowInstance.document.title = 'Customer Modal';
-        componentInstance = this.attachCustomerContainer(outlet, injector);
-      }
-      if (data.modalName === PopoutModalName.employerDetail) {
-        windowInstance.document.title = 'Employer Modal';
-        componentInstance = this.attachEmployerContainer(outlet, injector);
-      }
+        // Attach the portal
+        let componentInstance;
+        if (data.modalName === PopoutModalName.customerDetail) {
+          windowInstance.document.title = 'Customer Modal';
+          componentInstance = this.attachCustomerContainer(outlet, injector);
+        }
+        if (data.modalName === PopoutModalName.employerDetail) {
+          windowInstance.document.title = 'Employer Modal';
+          componentInstance = this.attachEmployerContainer(outlet, injector);
+        }
 
-      POPOUT_MODALS[data.modalName] = { windowInstance, outlet, componentInstance };
+        POPOUT_MODALS[data.modalName] = { windowInstance, outlet, componentInstance };
+      };
     }
   }
 
@@ -86,12 +93,6 @@ export class PopoutService implements OnDestroy {
     });
   }
 
-  createInjector(data): PortalInjector {
-    const injectionTokens = new WeakMap();
-    injectionTokens.set(POPOUT_MODAL_DATA, data);
-    return new PortalInjector(this.injector, injectionTokens);
-  }
-
   attachCustomerContainer(outlet, injector) {
     const containerPortal = new ComponentPortal(CustomerComponent, null, injector);
     const containerRef: ComponentRef<CustomerComponent> = outlet.attach(containerPortal);
@@ -102,5 +103,24 @@ export class PopoutService implements OnDestroy {
     const containerPortal = new ComponentPortal(EmployerComponent, null, injector);
     const containerRef: ComponentRef<EmployerComponent> = outlet.attach(containerPortal);
     return containerRef.instance;
+  }
+
+  createInjector(data): PortalInjector {
+    const injectionTokens = new WeakMap();
+    injectionTokens.set(POPOUT_MODAL_DATA, data);
+    return new PortalInjector(this.injector, injectionTokens);
+  }
+
+  getStyleSheetElement() {
+    const styleSheetElement = document.createElement('link');
+    document.querySelectorAll('link').forEach(htmlElement => {
+      if (htmlElement.rel === 'stylesheet') {
+        const absoluteUrl = new URL(htmlElement.href).href;
+        styleSheetElement.rel = 'stylesheet';
+        styleSheetElement.href = absoluteUrl;
+      }
+    });
+    console.log(styleSheetElement.sheet);
+    return styleSheetElement;
   }
 }
