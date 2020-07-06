@@ -69,7 +69,7 @@ export class AppComponent {
         const injector = this.popoutService.createInjector(modalData);
         const componentInstance = this.popoutService.attachCustomerContainer(POPOUT_MODALS['outlet'], injector);
         POPOUT_MODALS['componentInstance'] = componentInstance;
-        this.popoutService.focusPopoutWindow(PopoutModalName.customerDetail);
+        this.popoutService.focusPopoutWindow();
       }
     }
   }
@@ -86,7 +86,7 @@ export class AppComponent {
 
     const employerPopoutDetails = POPOUT_MODALS[PopoutModalName.employerDetail];
 
-    if (!this.popoutService.isPopoutWindowOpen(PopoutModalName.employerDetail)) {
+    if (!this.popoutService.isPopoutWindowOpen()) {
       this.popoutService.openPopoutModal(modalData);
     } else {
       const sameCustomer = POPOUT_MODALS['componentInstance'].name === name;
