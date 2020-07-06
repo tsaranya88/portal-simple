@@ -20,7 +20,7 @@ export class PopoutService implements OnDestroy {
   openPopoutModal(data) {
     const windowInstance = this.openOnce(
       'assets/modal/popout.html',
-      `${data.modalName}`
+      'MODAL_POPOUT'
     );
 
     // Wait for window instance to be created
@@ -70,25 +70,26 @@ export class PopoutService implements OnDestroy {
           componentInstance = this.attachEmployerContainer(outlet, injector);
         }
 
-        POPOUT_MODALS[data.modalName] = { windowInstance, outlet, componentInstance };
+        POPOUT_MODALS['windowInstance'] = windowInstance;
+        POPOUT_MODALS['outlet'] = outlet;
+        POPOUT_MODALS['componentInstance'] = componentInstance;
       };
     }
   }
 
-  isPopoutWindowOpen(modalName) {
-    return POPOUT_MODALS[modalName]['windowInstance'] && !POPOUT_MODALS[modalName]['windowInstance'].closed;
+  isPopoutWindowOpen() {
+    return POPOUT_MODALS['windowInstance'] && !POPOUT_MODALS['windowInstance'].closed;
   }
 
-  focusPopoutWindow(modalName) {
-    POPOUT_MODALS[modalName]['windowInstance'].focus();
+  focusPopoutWindow() {
+    POPOUT_MODALS['windowInstance'].focus();
   }
 
   closePopoutModal() {
     Object.keys(POPOUT_MODALS).forEach(modalName => {
-      if (POPOUT_MODALS[modalName]['windowInstance']) {
-        POPOUT_MODALS[modalName]['windowInstance'].close();
+      if (POPOUT_MODALS['windowInstance']) {
+        POPOUT_MODALS['windowInstance'].close();
       }
-      POPOUT_MODALS[modalName] = {};
     });
   }
 

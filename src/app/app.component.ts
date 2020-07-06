@@ -21,7 +21,7 @@ export class AppComponent {
       'Mark': {
         id: '2222',
         age: 45,
-        employer: 'XY Holding'
+        employer: 'XY Holdings'
       },
     };
     this.companyDetails = {
@@ -57,18 +57,18 @@ export class AppComponent {
 
     const customerPopoutDetails = POPOUT_MODALS[PopoutModalName.customerDetail];
 
-    if (!this.popoutService.isPopoutWindowOpen(PopoutModalName.customerDetail)) {
+    if (!this.popoutService.isPopoutWindowOpen()) {
       this.popoutService.openPopoutModal(modalData);
     } else {
-      const sameCustomer = customerPopoutDetails['componentInstance'].name === name;
+      const sameCustomer = POPOUT_MODALS['componentInstance'].name === name;
       // When popout modal is open and there is no change in data, focus on popout modal
       if (sameCustomer) {
-        this.popoutService.focusPopoutWindow(PopoutModalName.customerDetail);
+        this.popoutService.focusPopoutWindow();
       } else {
-        customerPopoutDetails['outlet'].detach();
+        POPOUT_MODALS['outlet'].detach();
         const injector = this.popoutService.createInjector(modalData);
-        const componentInstance = this.popoutService.attachCustomerContainer(customerPopoutDetails['outlet'], injector);
-        customerPopoutDetails['componentInstance'] = componentInstance;
+        const componentInstance = this.popoutService.attachCustomerContainer(POPOUT_MODALS['outlet'], injector);
+        POPOUT_MODALS['componentInstance'] = componentInstance;
         this.popoutService.focusPopoutWindow(PopoutModalName.customerDetail);
       }
     }
@@ -89,16 +89,16 @@ export class AppComponent {
     if (!this.popoutService.isPopoutWindowOpen(PopoutModalName.employerDetail)) {
       this.popoutService.openPopoutModal(modalData);
     } else {
-      const sameCustomer = employerPopoutDetails['componentInstance'].name === name;
+      const sameCustomer = POPOUT_MODALS['componentInstance'].name === name;
       // When popout modal is open and there is no change in data, focus on popout modal
       if (sameCustomer) {
-        this.popoutService.focusPopoutWindow(PopoutModalName.employerDetail);
+        this.popoutService.focusPopoutWindow();
       } else {
-        employerPopoutDetails['outlet'].detach();
+        POPOUT_MODALS['outlet'].detach();
         const injector = this.popoutService.createInjector(modalData);
-        const componentInstance = this.popoutService.attachEmployerContainer(employerPopoutDetails['outlet'], injector);
-        employerPopoutDetails['componentInstance'] = componentInstance;
-        this.popoutService.focusPopoutWindow(PopoutModalName.employerDetail);
+        const componentInstance = this.popoutService.attachEmployerContainer(POPOUT_MODALS['outlet'], injector);
+        POPOUT_MODALS['componentInstance'] = componentInstance;
+        this.popoutService.focusPopoutWindow();
       }
     }
   }

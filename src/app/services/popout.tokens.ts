@@ -19,7 +19,5 @@ export enum PopoutModalName {
 }
 
 export let POPOUT_MODALS = {
-  CUSTOMER_DETAIL: {},
-  EMPLOYER_DETAIL: {}
 };
 

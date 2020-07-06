@@ -8,8 +8,8 @@
         <p>This card explains Jessica's personal & employment details.</p>
       </div>
       <div class="card-action">
-        <button (click)="openEmployerPopout('ABCD Bank')">Employer Details</button>
         <button (click)="openCustomerPopout('Jessica')">Personal Details</button>
+        <button (click)="openEmployerPopout(customerDetails['Jessica'].employer)">Employer Details</button>
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
         <p>This card explains Mark's personal & employment details.</p>
       </div>
       <div class="card-action">
-        <button (click)="openEmployerPopout('XY Holdings')">Employer Details</button>
         <button (click)="openCustomerPopout('Mark')">Personal Details</button>
+        <button (click)="openEmployerPopout(customerDetails['Mark'].employer)">Employer Details</button>
       </div>
     </div>
   </div>
