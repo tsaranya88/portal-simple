@@ -30,10 +30,10 @@ export class PopoutService implements OnDestroy {
   }
 
   openOnce(url, target) {
-    // open a blank "target" window
+    // Open a blank "target" window
     // or get the reference to the existing "target" window
     const winRef = window.open('', target, '', true);
-    // if the "target" window was just opened, change its url
+    // If the "target" window was just opened, change its url
     if (winRef.location.href === 'about:blank') {
       winRef.location.href = url;
     }
@@ -42,7 +42,7 @@ export class PopoutService implements OnDestroy {
 
   createCDKPortal(data, windowInstance) {
     if (windowInstance) {
-      // create a PortalOutlet with the body of the new window document
+      // Create a PortalOutlet with the body of the new window document
       const outlet = new DomPortalOutlet(windowInstance.document.body, this.componentFactoryResolver, this.applicationRef, this.injector);
       // Copy styles from parent window
       document.querySelectorAll('style').forEach(htmlElement => {
